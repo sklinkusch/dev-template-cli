@@ -9,5 +9,12 @@ if (myArgs.includes("ls") && myArgs.includes("templates")) {
 
 if (myArgs[0] === "create") {
   let template = myArgs[1];
-  console.log(template);
+  const furtherArgs = myArgs.slice(2);
+  const furtherArgsObj = furtherArgs.reduce((acc, curr) => {
+    const shortened = curr.slice(2);
+    const [key, value] = shortened.split("=");
+    acc[key] = value;
+    return acc;
+  }, {})
+  console.log(furtherArgsObj);
 }
