@@ -1,4 +1,4 @@
-const { readdirSync, mkdir } = require("fs");
+const { readdirSync, mkdir, readFileSync, writeFileSync } = require("fs");
 
 const myArgs = process.argv.slice(2);
 if (myArgs.includes("ls") && myArgs.includes("templates")) {
@@ -17,7 +17,14 @@ if (myArgs[0] === "create") {
     return acc;
   }, {})
   const dest = furtherArgsObj.dest.replace('~', process.env.HOME);
-  mkdir(dest, { recursive: true }, (err) => {
+  const { name } = furtherArgsObj;
+  const targetDir = `${dest}/${name}`;
+  mkdir(targetDir, { recursive: true }, (err) => {
     if (err) throw err;
   });
+  const packageJSONRaw = readFileSync(`${process.env.PWD}/templates/${template}/package.json`, 'utf8');
+  const packageRaw = JSON.parse(packageJSONRaw);
+  packageRaw.name = furtherArgsObj.name;
+  const packageJSON = JSON.stringify(packageRaw);
+  writeFileSync(`${targetDir}/package.json`, packageJSON, { encoding: 'utf8' });
 }
