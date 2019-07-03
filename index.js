@@ -1,5 +1,6 @@
 const { readdirSync, mkdirSync, readFileSync, writeFileSync, copyFileSync, existsSync } = require("fs");
 const { showHelp } = require("./messaging");
+const { listTemplates } = require("./list-templates");
 const { spawn } = require("child_process");
 
 const myArgs = process.argv.slice(2);
@@ -10,8 +11,7 @@ if (myArgs.includes("--help")) {
 }
 
 if (myArgs.includes("ls") && myArgs.includes("templates")) {
-  const contents = readdirSync("./templates", "utf8")
-  contents.forEach(content => console.log(content));
+  listTemplates();
   process.exit();
 }
 
