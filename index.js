@@ -1,6 +1,21 @@
 const { readdirSync, mkdirSync, readFileSync, writeFileSync, copyFileSync, existsSync } = require("fs");
+const { name, version } = require("./package.json");
 
 const myArgs = process.argv.slice(2);
+
+if (myArgs.includes("--help")) {
+  console.log(`
+  Welcome to ${name} ${version}!\n
+  The general usage is: node index.js options
+  possible options:
+  ls templates: list all available templates
+  create <template-name> name="<your project-name>" dest="<destination>":
+  creates a new project folder with the provided name in the destination directory using the given template
+  --help: prints this help
+  `);
+  process.exit();
+}
+
 if (myArgs.includes("ls") && myArgs.includes("templates")) {
   const contents = readdirSync("./templates", "utf8")
   contents.forEach(content => console.log(content));
