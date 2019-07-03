@@ -63,7 +63,17 @@ if (myArgs[0] === "create") {
     }
   });
   const install = spawn('npm', ['install'], { cwd: targetDir });
-  install.on('error', (err) => {
+  install.stderr.on('error', (err) => {
     console.log('Failed to install node_modules');
-  })
+  });
+  install.stdout.on('data', (data) => {
+    console.log(data.toString());
+  });
+  const runDev = spawn('npm', ['run', 'dev'], { cwd: targetDir });
+  runDev.stderr.on('error', (err) => {
+    console.log('Failed to run nodemon');
+  });
+  runDev.stdout.on('data', (data) => {
+    console.log(data.toString());
+  });
 }
