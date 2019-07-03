@@ -1,5 +1,6 @@
 const { readdirSync, mkdirSync, readFileSync, writeFileSync, copyFileSync, existsSync } = require("fs");
 const { name, version } = require("./package.json");
+const { spawn } = require("child_process");
 
 const myArgs = process.argv.slice(2);
 
@@ -61,4 +62,8 @@ if (myArgs[0] === "create") {
       copyFileSync(`${sourceDir}/${file}`, `${targetDir}/${file}`);
     }
   });
+  const install = spawn('npm', ['install'], { cwd: targetDir });
+  install.on('error', (err) => {
+    console.log('Failed to install node_modules');
+  })
 }
