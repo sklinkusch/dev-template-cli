@@ -36,10 +36,10 @@ const makeFolder = (directory) => {
     // container variable
     let newDir;
     // containing folders from root folder to target folder
-    if (i !== targetDirArray.length) {
-      newDir = targetDirArray.slice(0, i).join("/");
+    if (i !== directoryArray.length) {
+      newDir = directoryArray.slice(0, i).join("/");
     } else {
-      newDir = targetDirArray.slice(0).join("/");
+      newDir = directoryArray.slice(0).join("/");
     }
     // checks if folder is already existing
     const isExisting = existsSync(newDir)
